@@ -24,5 +24,7 @@ CREATE TABLE events (
     event_date TIMESTAMP NOT NULL,
     price DECIMAL(10,2),
     event_category_id INTEGER,
-    FOREIGN KEY (event_category_id) REFERENCES event_categories(id) ON DELETE RESTRICT
+    event_location_id INTEGER,
+    FOREIGN KEY (event_category_id) REFERENCES event_categories(id) ON DELETE RESTRICT,
+    FOREIGN KEY (event_location_id) REFERENCES event_locations(id) ON DELETE RESTRICT
 );
