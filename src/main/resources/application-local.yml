@@ -3,9 +3,9 @@ spring:
     name: event-flow-api
     token-secret: ${JWT_SECRET:c686bdc9005ffaf4d47bdd390d9043e7}
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/eventflow}
+    url: ${POSTGRES_URL:jdbc:postgresql://192.168.0.10:5432/eventflow}
     username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:postgres}
+    password: ${POSTGRES_PASSWORD:Rt@08762}
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
