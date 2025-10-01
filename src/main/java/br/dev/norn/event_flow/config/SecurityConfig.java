@@ -34,7 +34,7 @@ public class SecurityConfig {
                 // Configurar as regras de autorização para os endpoints.
                 .authorizeHttpRequests(req -> {
                     // Exemplo: Permitir acesso sem autenticação ao endpoint de login
-                    req.requestMatchers("/login").permitAll();
+                    req.requestMatchers("/auth/login").permitAll();
                     req.requestMatchers("/users/register").permitAll();
                     // Exigir autenticação para qualquer outra requisição
                     req.anyRequest().authenticated();
