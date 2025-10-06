@@ -2,6 +2,7 @@ package br.dev.norn.event_flow.service;
 
 import br.dev.norn.event_flow.domain.user.User;
 import br.dev.norn.event_flow.repository.UserRepository;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,5 +47,18 @@ public class AuthService implements UserDetailsService {
 
     private Instant expirationDate() {
         return LocalDateTime.now().plusHours(2).atZone(ZoneId.systemDefault()).toInstant();
+    }
+
+    private String verifyToken(String token) {
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("auth0")
+                    .build().verify(token).getSubject();
+
+        } catch (JWTVerificationException exception){
+            throw new RuntimeException("Erro ao verificar JWT");
+        }
     }
 }
