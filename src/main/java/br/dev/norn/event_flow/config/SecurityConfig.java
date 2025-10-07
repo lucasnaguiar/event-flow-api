@@ -1,5 +1,7 @@
 package br.dev.norn.event_flow.config;
 
+import br.dev.norn.event_flow.config.filter.SecurityFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,6 +22,9 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Autowired
+    private SecurityFilter securityFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -30,16 +36,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                // Configurar as regras de autorização para os endpoints.
-                .authorizeHttpRequests(req -> {
-                    // Exemplo: Permitir acesso sem autenticação ao endpoint de login
-                    req.requestMatchers("/auth/login").permitAll();
-                    req.requestMatchers("/users/register").permitAll();
-                    // Exigir autenticação para qualquer outra requisição
-                    req.anyRequest().authenticated();
-                })
-
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers("/auth/login", "/users/register").permitAll()
+                        .anyRequest().authenticated()
+                ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

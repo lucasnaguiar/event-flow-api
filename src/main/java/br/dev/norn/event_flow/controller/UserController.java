@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
     public ResponseEntity<List<UserDetailDTO>> index() {
         var users = userService.getUsers();
         return ResponseEntity.ok(users);

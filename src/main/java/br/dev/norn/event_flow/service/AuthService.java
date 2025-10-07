@@ -36,7 +36,7 @@ public class AuthService implements UserDetailsService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("norn.dev.br")
-                    .withSubject(user.getId().toString())
+                    .withSubject(user.getEmail())
                     .withClaim("email", user.getEmail())
                     .withExpiresAt(expirationDate())
                     .sign(algorithm);
@@ -49,16 +49,16 @@ public class AuthService implements UserDetailsService {
         return LocalDateTime.now().plusHours(2).atZone(ZoneId.systemDefault()).toInstant();
     }
 
-    private String verifyToken(String token) {
+    public String getSubject(String token) {
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth0")
+                    .withIssuer("norn.dev.br")
                     .build().verify(token).getSubject();
 
         } catch (JWTVerificationException exception){
-            throw new RuntimeException("Erro ao verificar JWT");
+            throw new RuntimeException(exception.getMessage());
         }
     }
 }
