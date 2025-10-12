@@ -8,6 +8,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import br.dev.norn.event_flow.domain.event.dto.EventStoreDTO;
+
 @Table(name = "events")
 @Entity(name = "Event")
 @Getter
@@ -37,4 +39,38 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "event_location_id")
     private EventLocation location;
+
+    public Event(EventStoreDTO data, EventLocation location, EventCategory category) {
+        this.name = data.name();
+        this.banner = data.banner();
+        this.description = data.description();
+        this.eventDate = data.eventDate();
+        this.price = data.price();
+        this.location = location;
+        this.category = category;
+    }
+
+    public void update(EventStoreDTO data, EventLocation location, EventCategory category) {
+        if (data.name() != null) {
+            this.name = data.name();
+        }
+        if (data.banner() != null) {
+            this.banner = data.banner();
+        }
+        if (data.description() != null) {
+            this.description = data.description();
+        }
+        if (data.eventDate() != null) {
+            this.eventDate = data.eventDate();
+        }
+        if (data.price() != null) {
+            this.price = data.price();
+        }
+        if (location != null) {
+            this.location = location;
+        }
+        if (category != null) {
+            this.category = category;
+        }
+    }
 }
