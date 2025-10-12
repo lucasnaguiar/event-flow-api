@@ -1,7 +1,7 @@
-package br.dev.norn.event_flow.service;
+package br.dev.norn.event_flow.domain.auth;
 
 import br.dev.norn.event_flow.domain.user.User;
-import br.dev.norn.event_flow.repository.UserRepository;
+import br.dev.norn.event_flow.domain.user.UserRepository;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,8 +1,7 @@
-package br.dev.norn.event_flow.controller;
+package br.dev.norn.event_flow.domain.user;
 
-import br.dev.norn.event_flow.dto.user.UserDetailDTO;
-import br.dev.norn.event_flow.dto.user.UserRegisterDTO;
-import br.dev.norn.event_flow.service.UserService;
+import br.dev.norn.event_flow.domain.user.dto.UserDetailDTO;
+import br.dev.norn.event_flow.domain.user.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

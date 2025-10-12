@@ -1,4 +1,4 @@
-package br.dev.norn.event_flow.dto.user;
+package br.dev.norn.event_flow.domain.user.dto;
 
 import br.dev.norn.event_flow.domain.user.User;
 

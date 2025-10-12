@@ -1,9 +1,8 @@
-package br.dev.norn.event_flow.controller;
+package br.dev.norn.event_flow.domain.auth;
 
 import br.dev.norn.event_flow.domain.user.User;
-import br.dev.norn.event_flow.dto.auth.LoginDTO;
-import br.dev.norn.event_flow.dto.auth.TokenDataObject;
-import br.dev.norn.event_flow.service.AuthService;
+import br.dev.norn.event_flow.domain.auth.dto.LoginDTO;
+import br.dev.norn.event_flow.domain.auth.dto.TokenDataObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

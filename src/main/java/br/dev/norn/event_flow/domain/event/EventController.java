@@ -1,6 +1,5 @@
-package br.dev.norn.event_flow.controller;
+package br.dev.norn.event_flow.domain.event;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

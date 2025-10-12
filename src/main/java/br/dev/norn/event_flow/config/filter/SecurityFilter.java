@@ -1,7 +1,7 @@
 package br.dev.norn.event_flow.config.filter;
 
-import br.dev.norn.event_flow.repository.UserRepository;
-import br.dev.norn.event_flow.service.AuthService;
+import br.dev.norn.event_flow.domain.user.UserRepository;
+import br.dev.norn.event_flow.domain.auth.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

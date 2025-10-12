@@ -1,9 +1,7 @@
-package br.dev.norn.event_flow.service;
+package br.dev.norn.event_flow.domain.user;
 
-import br.dev.norn.event_flow.domain.user.User;
-import br.dev.norn.event_flow.dto.user.UserDetailDTO;
-import br.dev.norn.event_flow.dto.user.UserRegisterDTO;
-import br.dev.norn.event_flow.repository.UserRepository;
+import br.dev.norn.event_flow.domain.user.dto.UserDetailDTO;
+import br.dev.norn.event_flow.domain.user.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

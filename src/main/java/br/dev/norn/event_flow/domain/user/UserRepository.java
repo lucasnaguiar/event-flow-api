@@ -1,6 +1,5 @@
-package br.dev.norn.event_flow.repository;
+package br.dev.norn.event_flow.domain.user;
 
-import br.dev.norn.event_flow.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
