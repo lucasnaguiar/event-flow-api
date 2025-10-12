@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.util.UriComponentsBuilder;
+
 @RestController
-@RequestMapping("category")
+@RequestMapping("/categories")
+@RequiredArgsConstructor
 public class EventCategoryController {
 
-    @Autowired
-    private EventCategoryService eventCategoryService;
+    private final EventCategoryService eventCategoryService;
 
     @GetMapping
     public ResponseEntity<List<EventCategoryDetailDTO>> index()
@@ -23,9 +26,10 @@ public class EventCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<EventCategoryDetailDTO> store(@RequestBody EventCategoryStoreDTO eventCategoryStoreDTO)
+    public ResponseEntity<EventCategoryDetailDTO> store(@RequestBody EventCategoryStoreDTO eventCategoryStoreDTO, UriComponentsBuilder uriBuilder)
     {
         var category = eventCategoryService.create(eventCategoryStoreDTO);
-        return new ResponseEntity<EventCategoryDetailDTO>(new EventCategoryDetailDTO(category), HttpStatus.CREATED);
+        var uri = uriBuilder.path("/categories/{id}").buildAndExpand(category.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EventCategoryDetailDTO(category));
     }
 }

@@ -7,22 +7,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class EventCategoryService {
 
-    @Autowired
-    private EventCategoryRepository eventCategoryRepository;
+    private final EventCategoryRepository eventCategoryRepository;
 
     public List<EventCategoryDetailDTO> getCategories() {
        return eventCategoryRepository.findAll().stream().map(EventCategoryDetailDTO::new).toList();
     }
 
     public EventCategory create(EventCategoryStoreDTO eventCategoryStoreDTO) {
-        EventCategory eventCategory = new EventCategory();
-        eventCategory.setName(eventCategoryStoreDTO.name());
-        eventCategoryRepository.save(eventCategory);
-
-        return eventCategory;
+        var eventCategory = new EventCategory(eventCategoryStoreDTO);
+        return eventCategoryRepository.save(eventCategory);
     }
 
 }
