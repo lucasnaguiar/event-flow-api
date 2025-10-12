@@ -8,23 +8,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class UserService {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+import lombok.RequiredArgsConstructor;
 
-    @Autowired
-    private UserRepository userRepository;
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     public List<UserDetailDTO> getUsers() {
         return userRepository.findAll().stream().map(UserDetailDTO::new).toList();
     }
 
-    public void store(UserRegisterDTO user) {
-        var userEntity = new User();
-        userEntity.setName(user.name());
-        userEntity.setEmail(user.email());
-        userEntity.setPassword(passwordEncoder.encode(user.password()));
-        userRepository.save(userEntity);
+    public User store(UserRegisterDTO userDTO) {
+        var userEntity = new User(userDTO);
+        userEntity.setPassword(passwordEncoder.encode(userDTO.password()));
+        return userRepository.save(userEntity);
     }
 }

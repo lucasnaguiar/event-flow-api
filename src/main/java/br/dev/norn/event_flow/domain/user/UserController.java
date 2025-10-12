@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.util.UriComponentsBuilder;
+
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserDetailDTO>> index() {
@@ -21,9 +25,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity create(@RequestBody UserRegisterDTO userRegisterDTO) {
-        userService.store(userRegisterDTO);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserDetailDTO> create(@RequestBody UserRegisterDTO userRegisterDTO, UriComponentsBuilder uriBuilder) {
+        var user = userService.store(userRegisterDTO);
+        var uri = uriBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UserDetailDTO(user));
     }
 }
