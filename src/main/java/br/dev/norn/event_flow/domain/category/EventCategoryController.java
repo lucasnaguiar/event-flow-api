@@ -2,6 +2,7 @@ package br.dev.norn.event_flow.domain.category;
 
 import br.dev.norn.event_flow.domain.category.dto.EventCategoryDetailDTO;
 import br.dev.norn.event_flow.domain.category.dto.EventCategoryStoreDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class EventCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<EventCategoryDetailDTO> store(@RequestBody EventCategoryStoreDTO eventCategoryStoreDTO, UriComponentsBuilder uriBuilder)
+    public ResponseEntity<EventCategoryDetailDTO> store(@RequestBody @Valid EventCategoryStoreDTO eventCategoryStoreDTO, UriComponentsBuilder uriBuilder)
     {
         var category = eventCategoryService.create(eventCategoryStoreDTO);
         var uri = uriBuilder.path("/categories/{id}").buildAndExpand(category.getId()).toUri();

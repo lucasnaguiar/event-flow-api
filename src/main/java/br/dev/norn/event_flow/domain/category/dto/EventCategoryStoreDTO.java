@@ -1,4 +1,9 @@
 package br.dev.norn.event_flow.domain.category.dto;
 
-public record EventCategoryStoreDTO(String name) {
+import jakarta.validation.constraints.NotBlank;
+
+public record EventCategoryStoreDTO(
+        @NotBlank
+        String name
+) {
 }
