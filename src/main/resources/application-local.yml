@@ -12,5 +12,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      enabled: true
+
+file:
+  upload-dir: uploads/images
 
 #        POSTGRES_URL=jdbc:postgresql://127.0.0.1:5432/eventflow;POSTGRES_USER=postgres;POSTGRES_PASSWORD=postgres

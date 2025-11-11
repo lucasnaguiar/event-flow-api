@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.dev.norn.event_flow.domain.event.dto.EventDetailDTO;
-import br.dev.norn.event_flow.domain.event.dto.EventStoreDTO;
+import br.dev.norn.event_flow.domain.event.dto.EventFormDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -22,10 +23,14 @@ public class EventController {
 
     private final EventService service;
 
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     @Transactional
-    public ResponseEntity<EventDetailDTO> create(@RequestBody @Valid EventStoreDTO data, UriComponentsBuilder uriBuilder){
-        var event = service.create(data);
+    public ResponseEntity<EventDetailDTO> create(
+            @Valid @ModelAttribute EventFormDTO formData,
+            @RequestParam(value = "banner", required = false) MultipartFile bannerFile,
+            UriComponentsBuilder uriBuilder) {
+
+        var event = service.create(formData.toStoreDTO(null), bannerFile);
         var uri = uriBuilder.path("/events/{id}").buildAndExpand(event.getId()).toUri();
         return ResponseEntity.created(uri).body(new EventDetailDTO(event));
     }
@@ -42,10 +47,14 @@ public class EventController {
         return ResponseEntity.ok(new EventDetailDTO(event));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
     @Transactional
-    public ResponseEntity<EventDetailDTO> update(@PathVariable Long id, @RequestBody @Valid EventStoreDTO data){
-        var event = service.update(id, data);
+    public ResponseEntity<EventDetailDTO> update(
+            @PathVariable Long id,
+            @Valid @ModelAttribute EventFormDTO formData,
+            @RequestParam(value = "banner", required = false) MultipartFile bannerFile) {
+
+        var event = service.update(id, formData.toStoreDTO(null), bannerFile);
         return ResponseEntity.ok(new EventDetailDTO(event));
     }
 
