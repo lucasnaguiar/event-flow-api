@@ -24,4 +24,18 @@ public class EventCategoryService {
         return eventCategoryRepository.save(eventCategory);
     }
 
+    public EventCategory readById(Long id) {
+        return eventCategoryRepository.getReferenceById(id);
+    }
+
+    public EventCategory update(Long id, EventCategoryStoreDTO data) {
+        var category = eventCategoryRepository.getReferenceById(id);
+        category.update(data);
+        return category;
+    }
+
+    public void delete(Long id) {
+        eventCategoryRepository.deleteById(id);
+    }
+
 }
